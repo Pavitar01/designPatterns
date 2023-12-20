@@ -34,7 +34,7 @@ Design patterns offer proven solutions to common problems in software developmen
 
 Discover the Container Presentation pattern, emphasizing the separation of concerns between presentational and container components for a cleaner and more maintainable codebase.
 
-## simple language: The parent component contain any of the logic part is meant to be container-presentation pattern
+##### simple language: The parent component contain any of the logic part is meant to be container-presentation pattern
 
 ```jsx
 import { useState } from "react";
