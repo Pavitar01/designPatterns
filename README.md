@@ -217,9 +217,9 @@ export default ContextProvider;
 ```
 
 #### 5. Hooks Patterns
+Learn about the Hooks pattern, a powerful feature in React for handling state and side effects in functional components.
 
 In hooks pattern we create our own custom hooks to get the states or data
-
 Learn how to create a custom hook, like 'useNetwork', for handling data fetching and managing state in functional components.
 
 ```jsx
@@ -251,9 +251,8 @@ const useNetwork = () => {
 };
 
 export default useNetwork;
-```
 
-Learn about the Hooks pattern, a powerful feature in React for handling state and side effects in functional components.
+```
 
 lets create one 'hook-pattern' file to get the loading state and products array 
 ```jsx
