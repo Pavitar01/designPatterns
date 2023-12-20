@@ -1,7 +1,3 @@
-Certainly! Let's modify the content to focus on the selected design patterns: Container Presentation, Render Props, Higher-Order Component (HOC), Context Provider, and React Hooks.
-
----
-
 ## React.js Design Patterns
 
 ![React Design Patterns](https://res.cloudinary.com/practicaldev/image/fetch/s--EMXGXPys--/c_imagga_scale,f_auto,fl_progressive,h_500,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/m19kq9ziypewhqufozr5.jpg)
