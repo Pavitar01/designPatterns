@@ -24,7 +24,7 @@ const withAlert = (WrappedComponent: React.ComponentType<any>) => {
         return (
             <div>
                 <p>This is the New Modified Normal Component</p>
-                <WrappedComponent {...props} string="Modified Normal Component"/>
+                <WrappedComponent {...props} string="Modified Normal Component" />
             </div>
         );
     };

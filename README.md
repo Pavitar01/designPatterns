@@ -34,6 +34,38 @@ Design patterns offer proven solutions to common problems in software developmen
 
 Discover the Container Presentation pattern, emphasizing the separation of concerns between presentational and container components for a cleaner and more maintainable codebase.
 
+```jsx
+import { useState } from "react";
+
+// The parent component contains the logic and follows the container-presentation pattern
+const ContainerPresentation = () => {
+  const [string, setString] = useState("hello");
+
+  const newString = () => {
+    if (string === "hello") setString("hi");
+    else if (string === "hi") {
+      setString("how r u");
+    } else {
+      setString("hello");
+    }
+  };
+
+  return (
+    <div>
+      <button onClick={newString}>Change String</button>
+      <ChangeString string={string} />
+    </div>
+  );
+};
+
+// The presentational component renders the UI based on the props it receives
+const ChangeString = ({ string }: { string: string }) => {
+  return <p>{string}</p>;
+};
+
+export default ContainerPresentation;
+```
+
 #### 2. Render Props Pattern
 
 Understand the Render Props pattern as a technique for component composition, allowing the sharing of code between components by passing a function as a prop.
