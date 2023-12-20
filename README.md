@@ -34,10 +34,11 @@ Design patterns offer proven solutions to common problems in software developmen
 
 Discover the Container Presentation pattern, emphasizing the separation of concerns between presentational and container components for a cleaner and more maintainable codebase.
 
+## simple language: The parent component contain any of the logic part is meant to be container-presentation pattern
+
 ```jsx
 import { useState } from "react";
 
-// The parent component contains the logic and follows the container-presentation pattern
 const ContainerPresentation = () => {
   const [string, setString] = useState("hello");
 
@@ -70,17 +71,209 @@ export default ContainerPresentation;
 
 Understand the Render Props pattern as a technique for component composition, allowing the sharing of code between components by passing a function as a prop.
 
+```jsx
+import { ReactNode, useState } from "react";
+
+// The props which render any of the HTML element and we can pass in children from its parent component
+// This part is meant to be render-props pattern
+
+const RenderProps = () => {
+  const [string, setString] = useState("hello");
+
+  const newString = () => {
+    if (string === "hello") setString("hi");
+    else if (string === "hi") {
+      setString("how r u");
+    } else {
+      setString("hello");
+    }
+  };
+
+  return (
+    <div>
+      <button onClick={newString}>Change String</button>
+      <ChangeString string={string} />
+      <Para>This is Children Props ['render props pattern']</Para>
+    </div>
+  );
+};
+
+const ChangeString = ({ string }: { string: string }) => {
+  return <p>{string}</p>;
+};
+
+const Para = ({ children }: { children: ReactNode }) => {
+  return <p>{children}</p>;
+};
+
+export default RenderProps;
+```
+
 #### 3. Higher-Order Component (HOC) Pattern
 
 Delve into the Higher-Order Component pattern, a reusable component logic pattern for enhancing component behavior and reusing functionality across different components.
 
+```jsx
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// High Order Component
+// High order function: The function which takes a function as input
+// High order component: The component which takes a component as input, can make changes and return the modified Component
+
+import React from "react";
+
+const NormalComponent = ({ string }: { string?: string }) => {
+  return <h1>{string}</h1>;
+};
+
+const Main = () => {
+  return (
+    <>
+      <NormalComponent string={"normal component"} />
+      <NewNormalComponent />
+    </>
+  );
+};
+// Naming convention: start with "with" + [componentName]
+// Example: withAlert, but you can use any naming convention
+const withAlert = (WrappedComponent: React.ComponentType<any>) => {
+  return (props: any) => {
+    return (
+      <div>
+        <p>This is the New Modified Normal Component</p>
+        <WrappedComponent {...props} string="Modified Normal Component" />
+      </div>
+    );
+  };
+};
+
+const NewNormalComponent = withAlert(NormalComponent);
+
+export default Main;
+```
+
 #### 4. Context Provider Pattern
 
-Explore the Context Provider pattern, a part of the React Context API, for managing and sharing global state across components efficiently.
+Explore the Context Provider pattern, a way to manage and share global state across components efficiently.
+
+```jsx
+import { createContext, useContext } from "react";
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const ContextProvider = () => {
+    return (
+        <main>
+            <Title />
+        </main>
+    );
+};
+
+// Reducing the props drilling
+const treeTypeContext = createContext<string[] | any>([]);
+
+const Title = () => {
+    const treeArray = ["timber", "palm", "pine", "oak"];
+    return (
+        <>
+            <h1>Save Trees</h1>
+            <treeTypeContext.Provider value={treeArray}>
+                <Heading />
+            </treeTypeContext.Provider>
+        </>
+    );
+};
+
+const Heading = () => {
+    return (
+        <>
+            <h2>Why Trees are important?</h2>
+            <ul>
+                <SubHeading />
+            </ul>
+        </>
+    );
+};
+
+const SubHeading = () => {
+    return (
+        <>
+            <h3>Trees are important for:</h3>
+            <SubSubHeading />
+        </>
+    );
+};
+
+const SubSubHeading = () => {
+    const context = useContext(treeTypeContext);
+    return (
+        <ul>
+            <li>Food </li>
+            <li>Clean Air </li>
+            <h5>Types of trees:</h5>{context.map((i: string) => <p>{i}</p>)}
+        </ul>
+    );
+};
+
+export default ContextProvider;
+```
 
 #### 5. Hooks Patterns
 
-Explore various patterns when using React Hooks for managing state and side effects in functional components, enabling a more concise and expressive component logic.
+In hooks pattern we create our own custom hooks to get the states or data
+
+Learn how to create a custom hook, like 'useNetwork', for handling data fetching and managing state in functional components.
+
+```jsx
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import axios from "axios";
+import { useEffect, useState } from "react";
+
+const useNetwork = () => {
+  const [products, setProducts] = useState < any > [];
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    const getData = async () => {
+      try {
+        const response = await axios.get("https://dummyjson.com/products");
+        setProducts(response.data.products);
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getData();
+  }, []);
+
+  return { loading, products };
+};
+
+export default useNetwork;
+```
+
+Learn about the Hooks pattern, a powerful feature in React for handling state and side effects in functional components.
+
+lets create one 'hook-pattern' file to get the loading state and products array 
+```jsx
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import useNetwork from './useNetwork';
+
+const Hooks = () => {
+  const { products, loading } = useNetwork();
+  return (
+    <>
+      {loading ? <p>loading ...</p> : <div>
+        {products.map((i: any, index: number) => <li key={index}>{i.title}</li>)}
+      </div>}
+    </>
+  );
+};
+
+export default Hooks;
+```
 
 ### Usage
 
@@ -93,3 +286,4 @@ Contributions are welcome! If you have insights, additional patterns, or improve
 ### License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+```
